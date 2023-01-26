@@ -24,7 +24,7 @@ const quoteSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getQuotes.pending, (state) => {
-      state.quotes = [];
+      state.quotes = state.totalPages > 0 ? state.quotes : [];
       state.isLoading = true;
     });
     builder.addCase(getQuotes.fulfilled, (state, { payload }) => {

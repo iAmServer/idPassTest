@@ -16,6 +16,14 @@ function Quotes() {
     dispatch(getQuotes(currentPage));
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    return () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+  }, [currentPage]);
+
   return (
     <>
       <Header />
@@ -24,40 +32,46 @@ function Quotes() {
 
       {error && <p>{error.message}</p>}
 
-      {!isLoading ? (
-        quotes.length > 0 ? (
-          <div className="quote-content">
-            {quotes.map((quote) => (
-              <Quote key={quote._id} info={quote} />
-            ))}
-          </div>
-        ) : (
-          <h3>No record</h3>
-        )
-      ) : (
-        <h3>Loading...</h3>
-      )}
+      {isLoading && <h3>Loading...</h3>}
+      {((isLoading && totalPages) || !isLoading) && (
+        <>
+          <div className="quotes">
+            {quotes.length > 0 ? (
+              <div className="quote-content">
+                {quotes.map((quote) => (
+                  <Quote key={quote._id} info={quote} />
+                ))}
+              </div>
+            ) : (
+              <h3>No record</h3>
+            )}
 
-      <div className="pagination">
-        <button
-          disabled={isLoading || currentPage === 1}
-          onClick={() => {
-            setCurrentPage(currentPage - 1);
-            dispatch(getQuotes(currentPage));
-          }}
-        >
-          Previous
-        </button>
-        <button
-          disabled={isLoading || currentPage === totalPages}
-          onClick={() => {
-            setCurrentPage(currentPage + 1);
-            dispatch(getQuotes(currentPage));
-          }}
-        >
-          Next
-        </button>
-      </div>
+            <div className="pagination">
+              <button
+                disabled={isLoading || currentPage === 1}
+                onClick={() => {
+                  setCurrentPage(currentPage - 1);
+                  dispatch(getQuotes(currentPage));
+                }}
+              >
+                Previous
+              </button>
+              <button
+                disabled={isLoading || currentPage === totalPages}
+                onClick={() => {
+                  setCurrentPage(currentPage + 1);
+                  dispatch(getQuotes(currentPage));
+                }}
+              >
+                Next
+              </button>
+              <p className="stat">
+                Page {currentPage} of {totalPages}
+              </p>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }
