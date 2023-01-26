@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { iNameStateData } from "../interfaces/names.interface";
 import { AppDispatch } from "../store";
 
-const Names: React.FunctionComponent = () => {
+const Names: React.FC = () => {
   const names = useSelector((state: iNameStateData) => state.names);
   const { isLoading, data, error } = names;
   const dispatch = useDispatch<AppDispatch>();

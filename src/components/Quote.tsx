@@ -5,7 +5,7 @@ interface iProp {
   info: iQuote;
 }
 
-const Quote: React.FunctionComponent<iProp> = ({ info }) => {
+const Quote: React.FC<iProp> = ({ info }) => {
   return (
     <div className="quote">
       <div className="quote-date">

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Header: React.FunctionComponent = () => {
+const Header: React.FC = () => {
   return (
     <nav className="navigator">
       <ul>
